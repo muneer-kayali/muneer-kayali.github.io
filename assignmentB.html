@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- <title>AssignmentB</title> -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    .fakeimg {
+      height: 200px;
+      background: #aaa;
+    }
+    .content-section {
+      display: none; /* Initially hide all sections */
+    }
+    #descriptions {
+      display: block; /* Only show the first section initially */
+    }
+    .statistics {
+        font-family: Arial, sans-serif; /* Keeps the font consistent */
+        margin: 20px; /* Adds some space around the container */
+        padding: 20px; /* Adds space inside the container */
+    }
+    .stat-item {
+        margin-bottom: 10px; /* Adds space below each statistic */
+    }
+    .stat-label {
+        font-weight: bold; /* Makes the label bold */
+    }
+    table {
+            width: 100%; /* Full width of the container */
+            border-collapse: collapse; /* Collapses borders between cells into a single border */
+            text-align: center; /* Center-aligns text within cells */
+        }
+
+        /* Styling for table headers and cells */
+        th, td {
+            padding: 8px; /* Adds padding inside cells */
+            border-left: 1px solid black; /* Adds a border to the left of each cell */
+            border-right: 1px solid black; /* Adds a border to the right of each cell */
+        }
+
+        /* Remove left border for the first cell and right border for the last cell */
+        th:first-child, td:first-child {
+            border-left: none; /* Removes the left border for the first cell in each row */
+        }
+
+        th:last-child, td:last-child {
+            border-right: none; /* Removes the right border for the last cell in each row */
+        }
+
+        /* Optional: Adding a header background */
+        th {
+            background-color: #f2f2f2; /* Light gray background for headers */
+        }
+  </style>
+</head>
+<body>
+
+<div class="jumbotron text-center" style="margin-bottom:0">
+  <h1>Determinants of High Rating in Popular Movies</h1>
+  <p>group 13</p> 
+</div>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">Outline</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#descriptions" onclick="showSection('descriptions')">Descriptions</a></li>
+        <li><a href="#data-collection" onclick="showSection('data-collection')">Data Collection</a></li>
+        <li><a href="#basic-analysis" onclick="showSection('basic-analysis')">Basic Analysis</a></li>
+        <li><a href="#network-analysis" onclick="showSection('network-analysis')">Network Analysis</a></li>
+        <li><a href="#textual-analysis" onclick="showSection('textual-analysis')">Textual Analysis</a></li>
+        <li><a href="#discussion" onclick="showSection('discussion')">Limitations</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<div id="descriptions" class="content-section">
+  <div class="container">
+    <h1><strong>Descriptions</strong></h1>
+    <div class="row">
+      <div class = "col-md-9">
+        <p>The popular movies attract a large number of audiences while the high rating movies are more likely to become a classic, enjoyed repeatedly by countless people.
+          Therefore, a successful movie is both famous and well reviewed. So what makes popular movies receive high ratings?
+        </p>
+        <p>In this project, we are going to analysis what factors that affect the ratings of movies with high popularity and determine what contributes popular to the high ratings.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="data-collection" class="content-section">
+  <div class="container">
+    <h1><strong>Data Collection</strong></h1>
+    <div class="row">
+      <div class = "col-md-9">
+        <p>To analysis the factors of the rate in high poularity movies, we collected the top 200 popular movies with the vote_count not equal to 0, ensuring it has a rating.</p>
+        <h3><strong>Top 200 popular movies</strong></h3>
+        <p>200 rows, 12 columns</p>
+        <h4><strong>Attributes</strong></h4>
+        <ul> 
+          <li>adult</li>
+          <li>genre_ids</li>
+          <li>id</li>
+          <li>original_language</li>
+          <li>overview</li>
+          <li>popularity</li>
+          <li>release_date</li>
+          <li>title</li>
+          <li>video</li>
+          <li>vote_average</li>
+          <li>vote_count</li>
+      </ul>
+        <!-- <img src="top200.png" alt="Top 200 Popular Movies" class="img-responsive" style = "width: 750px;height: 280px;"> -->
+        <h5><strong>Definition of popularity of movie</strong></h5>
+        <ul> 
+            <li>Number of votes for the day</li>
+            <li>Number of views for the day</li>
+            <li>Number of users who marked it as a "favourite" for the day</li>
+            <li>Number of users who added it to their "watchlist" for the day</li>
+            <li>Release date</li>
+            <li>Number of total votes</li>
+            <li>Previous days score</li>
+        </ul>
+        <h3><strong>Actors from top 200 movies</strong></h3>
+        <p>9023 rows, 4 columns</p>
+        <h4><strong>Attributes</strong></h4>
+        <ul> 
+          <li>movie_id</li>
+          <li>actor_name</li>
+          <li>actor_id</li>
+      </ul>
+        <!-- <img src="actor200.png" alt="Actors from top 200 movies" class="img-responsive" style = "width: 350px;height: 150px;"> -->
+        <h5><strong>Definition of popularity of actor</strong></h5>
+        <ul> 
+            <li>Number of views for the day</li>
+            <li>Previous days score</li>
+        </ul>
+      </div>
+      <div class="col-md-3">
+        <p>The dataset was collected by <a href="https://developer.themoviedb.org/docs/getting-started">TMDB</a> api, with rate limiting of 40 requests/sec, and saved as the excel file to maintain the formatting.</p>
+        <a href="https://drive.google.com/uc?export=download&id=1-xZcgUq0-N_32_tZuyhaKjKUCy55CqNw" download="collected data.zip" class="btn btn-primary">
+          Download Dataset
+        </a>
+        <br>
+        <br>
+        <p>View detailed steps in <a href="https://nbviewer.jupyter.org/github/LanxiZhang1/project-A/blob/main/projectA.ipynb">Notebook</a>.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="basic-analysis" class="content-section">
+  <div class="container">
+    <h1><strong>Basic Analysis</strong></h1>
+    <div class="row">
+      <div class = "col-md-8">
+        <!-- <img src="rate.png" alt="Ratings" class="img-responsive" style = "width: 700px;height: 400px;"> -->
+        <img src="https://github.com/LanxiZhang1/project-A/blob/main/rate.png?raw=true" alt="Ratings" class="img-responsive" style = "width: 700px;height: 400px;">
+      </div>
+      <div class = "col-md-4">
+        <p>According the histogram of the ratings of top 200 movies, a roughly normal distribution slightly skewed towards higher ratings.
+          The peak is around rating range between 7 and 8, suggesting the majority of popular movies have average ratings within the interval.
+          However, there are few moviews has very low ratings below 5.
+        </p>
+        <p>Then we will do the network and textual analysis to further examine the data.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="network-analysis" class="content-section">
+  <div class="container">
+    <h1><strong>Network Analysis</strong></h1>
+    <div class="row">
+      <div class = "col-md-6">
+        <!-- <img src="network.png" alt="Network" class="img-responsive"> -->
+        <img src="
+        https://github.com/LanxiZhang1/project-A/blob/main/network.png?raw=true" alt="Network" class="img-responsive">
+      </div>
+      <div class="col-md-6">
+        <p>The network is created by presenting actors as nodes and connections between the actors who have appeared in the same movie as edges. There are total number of 8058 nodes and 301920 edges in the network.</p>
+        <div class="statistics">
+          <div class="stat-item">
+              <span class="stat-label">Density:</span> 0.0093
+          </div>
+          <div class="stat-item">
+              <span class="stat-label">Number of connected components:</span> 23
+          </div>
+          <div class="stat-item">
+              <span class="stat-label">Number of isolated nodes:</span> 0
+          </div>
+        </div>
+        <p>The network has relatively low density, suggesting that the network is not totally interconnected.
+          The number of connected components and the isolated nodes indicates that there are many actors from 23 movies have not appeared in other movies and all the movies have more than one actors. 
+        </p> 
+        <div class="statistics">
+          <div class="stat-item">
+              <span class="stat-label">Average of degree:</span> 74.937
+          </div>
+          <div class="stat-item">
+              <span class="stat-label">Median of degree:</span> 62.0
+          </div>
+          <div class="stat-item">
+              <span class="stat-label">Minimum of degree:</span> 2
+          </div>
+          <div class="stat-item">
+              <span class="stat-label">Maximum of degree:</span> 455
+          </div>
+        </div>
+        <p>Each actor has collaborated with around 75 other actors on average, showing a high level of connectivity among actors.
+          And the significant difference between median and mean value suggests that there has the actors who has better influential than others.
+          The Maximum degree indicates the presence of actors who are involved in many movies, which could reveal the insights of the relatinship between actors and movie ratings.
+        </p>
+      </div>
+      <!-- <h3><strong>Discussion</strong></h3> -->
+      <h3><strong>Top 5  influential actors</strong></h3>
+        <table>
+          <thead>
+              <tr>
+                  <th>actor name</th>
+                  <th>total movies</th>
+                  <th>average rating</th>
+                  <th>max rating</th>
+                  <th>min rating</th>
+                  <th>popularity</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <td>Brad Pitt</td>
+                  <td>5</td>
+                  <td>7.702</td>
+                  <td>8.441</td>
+                  <td>6.800</td>
+                  <td>64.384</td>
+              </tr>
+              <tr>
+                  <td>Margot Robbie</td>
+                  <td>3</td>
+                  <td>7.332</td>
+                  <td>7.526</td>
+                  <td>7.070</td>
+                  <td>70.192</td>
+              </tr>
+              <tr>
+                <td>Samuel L. Jackson</td>
+                <td>10</td>
+                <td>6.866</td>
+                <td>8.489</td>
+                <td>4.821</td>
+                <td>59.057</td>
+              </tr>
+              <tr>
+                <td>Matt Damon</td>
+                <td>6</td>
+                <td>7.515</td>
+                <td>8.434</td>
+                <td>5.300</td>
+                <td>81.126</td>
+              </tr>
+              <tr>
+                <td>Robert Downey Jr.</td>
+                  <td>6</td>
+                  <td>7.619</td>
+                  <td>8.254</td>
+                  <td>6.840</td>
+                  <td>75.304</td>
+              </tr>
+          </tbody>
+      </table>
+      <p>
+        Excluding Samuel L. Jackson, the works of other actors have an average rating around 7.5, which is relatively high. 
+        However, Samuel L. Jackson also starred in the highest-rated movied, which scored 8.489 as very high rating, whis may due to the large number of movies he has acted, which vary in quality.
+        Conversely, Margot Robbie has only appeared in three films, but with very consistent ratings, all above 7, which may indicate the actor is more selective about the movie matters such as scripts or directors.
+        Morever the popularity of each actors is significant higher than the mean average of the whole actors, which is approximate to 14.248. Thus, compared to other actors, the audiences might be more familiar with them, 
+        and tend tto have more influence and a larger fan base at same time.
+      </p>
+      <p>Overall, there does appear to be some relationship between actors and ratings. Actors who are more selective about their roles are more likely to appear in high rating movies.
+        And actors with high popularity are more offten to attract better production teams, leading to high rated movies.
+        Additionally, their fans might inclined to give higher votes to the films.
+        However, the result suggests a potential trade-off between quantity and quality. Therefore, multiple detailed indicators such as acting skills, should be considered in further research.
+      </p>
+    </div>
+  </div>
+</div>
+
+<div id="textual-analysis" class="content-section">
+  <div class="container">
+    <h1><strong>Textual Analysis</strong></h1>
+    <p>For the textual analysis part we look at the overviews of the movie dataset. First we extract the communities of movies that share actors, then we sort them based on average average_vote. From here, we do 2 TF-IDF analyses, one where we treat each community as a document, and another where we merge the communities into 3 large ones and treat each of those as a single document. </p>
+    <p>The results of these analysis are shown below:
+    <h5><strong>Top 15 TF-IDF words for the top 10 communities of movies based on average vote rate</strong></h5>
+      <img src="https://github.com/LanxiZhang1/project-A/blob/main/tf_idf.PNG?raw=true" alt="Top 200 Popular Movies" class="img-responsive" style = "width: 1000px;height: 280px;">
+    <h5><strong>Top 15 TF-IDF words for the 3 merged communities (top-rated, middle-rated and bottom-rated)</strong></h5>
+      <img src="https://github.com/LanxiZhang1/project-A/blob/main/tf_idf_merged.PNG?raw=true" alt="Top 200 Popular Movies" class="img-responsive" style = "width: 1000px;height: 100px;">
+    <br>
+    <p>Finally, we made 3 WordCloud representing these 3 large communities. The top-rated community is shown below: </p>
+      <img src="https://github.com/LanxiZhang1/project-A/blob/main/TopComWordCloud.PNG?raw=true" alt="Top 200 Popular Movies" class="img-responsive" style = "width: 1000px;height: 600px;">
+    <p>The first approach was not very good, as it did not provide us with many words one can extract core concepts from. The reason for this is that using the first approach, 
+      the plain text is limited as each community has few movies, and each movie has a short overview. However, the second approach worked a bit better, where we can see important words for the top and middle brackets such as "love", "power", "clash", "protect", "ultim" and so on... 
+      The bottom bracket is a bit lacking, as the words are too specific and niche, and do not provide much meaning towards the concepts of the movies. The WordClouds however, were arguably the best at answering our research question.  
+    </p>
+  </div>
+</div>
+
+<div id="discussion" class="content-section">
+  <div class="container">
+    <h1><strong>Limitations</strong></h1>
+    <p>Although the network analysis and textual analysis provide valuable insights for the topic,
+      the conclusions are somewhat limited by many factors. Considering the network, 
+      the actor who has a high degree may not only due to they participation in many movies, but also could be influenced by thoese movies featuring a large casts. Another limitation is that the dataset is collected from a single source, which may not be representative of the entire movie industry. Furthermore, budget and revenue data are not accounted for, which could be important factors in determining the ratings of movies.
+      While the textual analysis was limited by the shot length of the overviews and the small quantity of samples reviewed, which may affect the generalizability of the findings which may
+      generate errors in the results.
+      Therefore, more samples and details might be required to obatin more accurate results in further research. This limitation heavily affects the TF-IDF, as the IDF is calculated based on the number of documents, and the number of documents is very low. 
+      Furthermore, the IDF in a way is counterintuitive, as the overviews are very short, and as such a word withholds a lot of information, but the IDF does not take this into account and downweights it if it appears in multiple documents. Funnily enough, the TF's were actually better at providing us with information, as they were able to show us the most common words in each community without the limiting downweights of the IDF. 
+      The WordClouds were arguably the best at answering our research question, as they were able to show us the most common words in each community without the limiting downweights of the IDF. They also mirrored the results of the TF's, but in a more visual way. 
+     <h1><strong>Conclusion</strong></h1>
+     <p> From the textual analysis, mainly the WordClouds and TFs, we concluded that the highest rated movies are much more action-packed and include world-affecting events, life and death situations, and so on. The middle-rated movies are similar, but more focus is on superhero elements. 
+      The lowest-rated movies are more about personal stories, and have a lot of romance/drama elements and are more niche. A reason for this could be that the top-rated movies are more appealing to a wider audience, while the bottom-rated movies are more niche and appeal to a smaller audience. Furthermore, smaller stories about personal lives are harder to pull off, as they are more relatable and as such, the audience is more critical of them, while action-packed movies are generally well-recieved,
+      as they follow a more predictable well-known formula of good vs evil.
+    </p> 
+  </div>
+</div>
+
+<div class="jumbotron text-center" style="margin-bottom:0">
+  <p>Computational Social Science 2024</p>
+  <a href="https://github.com/LanxiZhang1/project-A">Github repository</a>
+</div>
+
+<script>
+  function showSection(sectionId) {
+    // Hide all sections
+    $('.content-section').hide();
+
+    // Show the requested section
+    $('#' + sectionId).show();
+
+    // Update active class on navbar
+    $('.nav li').removeClass('active');
+    $('.nav a[href="#' + sectionId + '"]').parent().addClass('active');
+  }
+
+  // Update active class based on scroll position
+  $(window).on('scroll', function () {
+    var scrollPos = $(document).scrollTop();
+    $('nav a').each(function () {
+      var currLink = $(this);
+      var refElement = $(currLink.attr('href'));
+      if (refElement.position().top <= scrollPos && refElement.position().top + refElement.height() > scrollPos) {
+        $('nav ul li').removeClass('active');
+        currLink.parent().addClass('active');
+      }
+    });
+  });
+</script>
+
+
+</body>
+</html>
